@@ -8,14 +8,13 @@ import 'player_dashboard.dart';
 import 'game_board_view.dart';
 import 'game_app_bar.dart';
 import 'game_bottom_bar.dart';
-import 'login_dialog.dart';     // NEW Import
+import 'login_dialog.dart'; // NEW Import
 import 'visual_tree_screen.dart'; // Make sure this is imported!
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HexGameScreen(),
-  ));
+  runApp(
+    const MaterialApp(debugShowCheckedModeBanner: false, home: HexGameScreen()),
+  );
 }
 
 class HexGameScreen extends StatefulWidget {
@@ -113,7 +112,9 @@ class _HexGameScreenState extends State<HexGameScreen> {
 
     if (_redPlayer == null || _bluePlayer == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Please select profiles for both players first!"))
+        const SnackBar(
+          content: Text("Please select profiles for both players first!"),
+        ),
       );
       return;
     }
@@ -130,7 +131,9 @@ class _HexGameScreenState extends State<HexGameScreen> {
       for (int c = 0; c < _engine.boardSize; c++) {
         final double hexCenterX = (c * w) + (r * w / 2) + w / 2;
         final double hexCenterY = (r * 1.5 * h) + h;
-        double dist = math.sqrt(math.pow(actualX - hexCenterX, 2) + math.pow(actualY - hexCenterY, 2));
+        double dist = math.sqrt(
+          math.pow(actualX - hexCenterX, 2) + math.pow(actualY - hexCenterY, 2),
+        );
 
         if (dist < minDistance) {
           minDistance = dist;
@@ -147,7 +150,8 @@ class _HexGameScreenState extends State<HexGameScreen> {
             _gameOver = true;
             _recordMatchResults();
           } else {
-            _currentPlayer = (_currentPlayer == Player.red) ? Player.blue : Player.red;
+            _currentPlayer =
+                (_currentPlayer == Player.red) ? Player.blue : Player.red;
           }
         }
       });
@@ -169,12 +173,49 @@ class _HexGameScreenState extends State<HexGameScreen> {
 
   // --- REFACTORED: Now uses the extracted LoginDialog widget ---
   void _openLoginDialog(Player side) {
+    // 1. Existing check: Prevent switching mid-game
+    bool gameInProgress = _engine.board.any((cell) => cell != Player.none) && !_gameOver;
+
+    if (gameInProgress) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Cannot switch profiles mid-game! Finish or Reset the game first."),
+            backgroundColor: Colors.orange,
+          )
+      );
+      return;
+    }
+
     showDialog(
       context: context,
       builder: (context) => LoginDialog(
         side: side,
         playerDB: _playerDB,
         onProfileSelected: (selectedProfile) {
+
+          // --- NEW BUG FIX: Prevent selecting the same player for both sides ---
+          if (side == Player.red && _bluePlayer?.name == selectedProfile.name) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("This player is already logged in as Blue!"),
+                  backgroundColor: Colors.red,
+                )
+            );
+            return; // Abort the state update
+          }
+
+          if (side == Player.blue && _redPlayer?.name == selectedProfile.name) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("This player is already logged in as Red!"),
+                  backgroundColor: Colors.red,
+                )
+            );
+            return; // Abort the state update
+          }
+          // ---------------------------------------------------------------------
+
+          // If they pass the check, update the state normally!
           setState(() {
             if (side == Player.red) {
               _redPlayer = selectedProfile;
@@ -192,11 +233,15 @@ class _HexGameScreenState extends State<HexGameScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: GameAppBar(
-        onRestart: () => setState(() {
-          _engine = HexEngine(boardSize: 11);
-          _currentPlayer = Player.red;
-          _gameOver = false;
-        }),
+        onRestart:
+            () => setState(() {
+              _engine = HexEngine(boardSize: 11);
+              _currentPlayer = Player.red;
+              _gameOver = false;
+              // NEW: Log out both players when resetting the board
+              _redPlayer = null;
+              _bluePlayer = null;
+            }),
       ),
       body: Column(
         children: [

@@ -1,32 +1,71 @@
 import 'package:flutter/material.dart';
 import 'player_bst.dart';
+import 'user_profile_screen.dart';
 
-class VisualTreeScreen extends StatelessWidget {
+// Helper class to store the location of drawn nodes
+class NodeHitbox {
+  final PlayerProfile profile;
+  final Rect rect;
+  NodeHitbox(this.profile, this.rect);
+}
+
+class VisualTreeScreen extends StatefulWidget {
   final PlayerBST playerDB;
 
   const VisualTreeScreen({Key? key, required this.playerDB}) : super(key: key);
 
   @override
+  State<VisualTreeScreen> createState() => _VisualTreeScreenState();
+}
+
+class _VisualTreeScreenState extends State<VisualTreeScreen> {
+  // This list will be populated by the CustomPainter during the build phase
+  List<NodeHitbox> _hitboxes = [];
+
+  void _handleTap(TapUpDetails details) {
+    // Check if the tap location falls inside any of our saved node hitboxes
+    for (var hitbox in _hitboxes) {
+      if (hitbox.rect.contains(details.localPosition)) {
+        // We hit a node! Navigate to the profile screen.
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfileScreen(profile: hitbox.profile),
+          ),
+        );
+        break; // Stop searching once we find a match
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Clear old hitboxes on every rebuild
+    _hitboxes.clear();
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade900, // Dark mode looks great for data visualization
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         title: const Text("BST Structure"),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
       ),
-      // We use InteractiveViewer so you can pan and zoom around your massive tree!
       body: InteractiveViewer(
         constrained: false,
         boundaryMargin: const EdgeInsets.all(2000),
         minScale: 0.1,
         maxScale: 5.0,
-        child: Container(
-          width: 4000,  // Give the canvas a massive virtual space to draw on
-          height: 4000,
-          color: Colors.transparent,
-          child: CustomPaint(
-            painter: BSTPainter(playerDB.root),
+        child: GestureDetector(
+          // onTapUp gives us the exact local coordinates of the tap on the canvas
+          onTapUp: _handleTap,
+          child: Container(
+            width: 4000,
+            height: 4000,
+            color: Colors.transparent, // Required for GestureDetector to register taps on empty space
+            child: CustomPaint(
+              // Pass the hitbox list to the painter so it can fill it up
+              painter: BSTPainter(widget.playerDB.root, _hitboxes),
+            ),
           ),
         ),
       ),
@@ -36,21 +75,21 @@ class VisualTreeScreen extends StatelessWidget {
 
 class BSTPainter extends CustomPainter {
   final BSTNode? root;
+  final List<NodeHitbox> hitboxes;
   final double nodeRadius = 30.0;
 
-  BSTPainter(this.root);
+  BSTPainter(this.root, this.hitboxes);
 
   @override
   void paint(Canvas canvas, Size size) {
     if (root == null) return;
 
-    // Start painting from the top center of our virtual canvas
     _drawNode(
       canvas: canvas,
       node: root!,
       x: size.width / 2,
       y: 100,
-      horizontalSpacing: size.width / 4, // Initial horizontal spread
+      horizontalSpacing: size.width / 4,
     );
   }
 
@@ -69,18 +108,17 @@ class BSTPainter extends CustomPainter {
       ..color = Colors.blue.shade700
       ..style = PaintingStyle.fill;
 
-    // 1. Recursively draw lines to children FIRST (so they render under the circles)
+    // 1. Draw connecting lines
     if (node.left != null) {
       double nextX = x - horizontalSpacing;
-      double nextY = y + 100; // Drop down 100 pixels for the next level
+      double nextY = y + 100;
       canvas.drawLine(Offset(x, y), Offset(nextX, nextY), paintLine);
-
       _drawNode(
         canvas: canvas,
         node: node.left!,
         x: nextX,
         y: nextY,
-        horizontalSpacing: horizontalSpacing / 2, // Halve the spread for the next level
+        horizontalSpacing: horizontalSpacing / 2,
       );
     }
 
@@ -88,7 +126,6 @@ class BSTPainter extends CustomPainter {
       double nextX = x + horizontalSpacing;
       double nextY = y + 100;
       canvas.drawLine(Offset(x, y), Offset(nextX, nextY), paintLine);
-
       _drawNode(
         canvas: canvas,
         node: node.right!,
@@ -98,11 +135,11 @@ class BSTPainter extends CustomPainter {
       );
     }
 
-    // 2. Draw the Node Circle
+    // 2. Draw the Node
     canvas.drawCircle(Offset(x, y), nodeRadius, paintNode);
     canvas.drawCircle(Offset(x, y), nodeRadius, Paint()..color = Colors.white..style = PaintingStyle.stroke..strokeWidth = 2);
 
-    // 3. Draw the Player's Name inside the Node
+    // 3. Draw Text
     final textSpan = TextSpan(
       text: node.profile.name,
       style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
@@ -113,10 +150,15 @@ class BSTPainter extends CustomPainter {
       textAlign: TextAlign.center,
     );
     textPainter.layout(minWidth: 0, maxWidth: nodeRadius * 2);
-
-    // Center the text inside the circle
     final textOffset = Offset(x - (textPainter.width / 2), y - (textPainter.height / 2));
     textPainter.paint(canvas, textOffset);
+
+    // 4. NEW: Save the Hitbox!
+    // We create a mathematical rectangle over the circle we just drew and save it to our list.
+    hitboxes.add(NodeHitbox(
+      node.profile,
+      Rect.fromCircle(center: Offset(x, y), radius: nodeRadius),
+    ));
   }
 
   @override

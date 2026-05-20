@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'user_profile_screen.dart';
 import 'player_bst.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -94,6 +95,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   Text("${player.losses} Losses", style: const TextStyle(color: Colors.red, fontSize: 12)),
                 ],
               ),
+              // NEW: Navigate to the profile screen on tap!
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfileScreen(profile: player),
+                  ),
+                );
+              },
             ),
           );
         },
