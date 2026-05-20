@@ -38,23 +38,20 @@ class _LoginDialogState extends State<LoginDialog> {
     String newName = _searchQuery.trim();
     if (newName.isEmpty) return;
 
-    // Double check they don't already exist
     PlayerProfile? existing = widget.playerDB.search(newName);
 
     if (existing == null) {
       existing = PlayerProfile(name: newName);
       widget.playerDB.insert(existing);
-      widget.playerDB.saveTreeToStorage(); // Save new tree to local storage
+      widget.playerDB.saveTreeToStorage();
     }
 
-    // Pass the profile back to main.dart and close dialog
     widget.onProfileSelected(existing);
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Ask the BST for prefix matches in O(log N) time!
     List<PlayerProfile> searchResults = widget.playerDB.searchByPrefix(_searchQuery);
     final String sideName = widget.side == Player.red ? 'Red' : 'Blue';
 

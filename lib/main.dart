@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Add this line!
+import 'package:shared_preferences/shared_preferences.dart';
 import 'leaderboard_screen.dart';
 import 'dart:math' as math;
 import 'hex_engine.dart';
@@ -8,8 +8,8 @@ import 'player_dashboard.dart';
 import 'game_board_view.dart';
 import 'game_app_bar.dart';
 import 'game_bottom_bar.dart';
-import 'login_dialog.dart'; // NEW Import
-import 'visual_tree_screen.dart'; // Make sure this is imported!
+import 'login_dialog.dart';
+import 'visual_tree_screen.dart';
 
 void main() {
   runApp(
@@ -44,7 +44,6 @@ class _HexGameScreenState extends State<HexGameScreen> {
   Future<void> _loadDatabase() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Check if the database is empty. If it is, inject our massive dummy dataset!
     if (!prefs.containsKey('hex_players_data')) {
       String dummyData = ''' 
       [
@@ -102,7 +101,6 @@ class _HexGameScreenState extends State<HexGameScreen> {
       await prefs.setString('hex_players_data', dummyData);
     }
 
-    // Now load the tree normally using your awesome balancing algorithm
     await _playerDB.loadTreeFromStorage();
     setState(() {});
   }
@@ -171,9 +169,7 @@ class _HexGameScreenState extends State<HexGameScreen> {
     }
   }
 
-  // --- REFACTORED: Now uses the extracted LoginDialog widget ---
   void _openLoginDialog(Player side) {
-    // 1. Existing check: Prevent switching mid-game
     bool gameInProgress = _engine.board.any((cell) => cell != Player.none) && !_gameOver;
 
     if (gameInProgress) {
@@ -193,7 +189,6 @@ class _HexGameScreenState extends State<HexGameScreen> {
         playerDB: _playerDB,
         onProfileSelected: (selectedProfile) {
 
-          // --- NEW BUG FIX: Prevent selecting the same player for both sides ---
           if (side == Player.red && _bluePlayer?.name == selectedProfile.name) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -201,7 +196,7 @@ class _HexGameScreenState extends State<HexGameScreen> {
                   backgroundColor: Colors.red,
                 )
             );
-            return; // Abort the state update
+            return;
           }
 
           if (side == Player.blue && _redPlayer?.name == selectedProfile.name) {
@@ -211,11 +206,9 @@ class _HexGameScreenState extends State<HexGameScreen> {
                   backgroundColor: Colors.red,
                 )
             );
-            return; // Abort the state update
+            return;
           }
-          // ---------------------------------------------------------------------
 
-          // If they pass the check, update the state normally!
           setState(() {
             if (side == Player.red) {
               _redPlayer = selectedProfile;
@@ -238,7 +231,6 @@ class _HexGameScreenState extends State<HexGameScreen> {
               _engine = HexEngine(boardSize: 11);
               _currentPlayer = Player.red;
               _gameOver = false;
-              // NEW: Log out both players when resetting the board
               _redPlayer = null;
               _bluePlayer = null;
             }),
@@ -250,7 +242,7 @@ class _HexGameScreenState extends State<HexGameScreen> {
             gameOver: _gameOver,
             redPlayer: _redPlayer,
             bluePlayer: _bluePlayer,
-            onLoginTap: _openLoginDialog, // Pass the new clean method here
+            onLoginTap: _openLoginDialog,
           ),
           Expanded(
             child: GameBoardView(
@@ -259,7 +251,6 @@ class _HexGameScreenState extends State<HexGameScreen> {
               onBoardTap: _handleTap,
             ),
           ),
-          // 4. Extracted Bottom Bar
           GameBottomBar(
             onLeaderboardTap: () {
               Navigator.push(
@@ -270,7 +261,6 @@ class _HexGameScreenState extends State<HexGameScreen> {
               );
             },
             onViewTreeTap: () {
-              // NEW: Navigate to the beautiful custom painter screen!
               Navigator.push(
                 context,
                 MaterialPageRoute(

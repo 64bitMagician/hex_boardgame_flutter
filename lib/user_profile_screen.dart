@@ -47,7 +47,6 @@ class UserProfileScreen extends StatelessWidget {
               ),
               const Divider(height: 40, thickness: 2),
 
-              // Stats Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -57,7 +56,6 @@ class UserProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Win Rate Bar
               Text("Win Rate: ${winRate.toStringAsFixed(1)}%", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               LinearProgressIndicator(

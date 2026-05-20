@@ -31,7 +31,6 @@ class PlayerDashboard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // RED PLAYER LOGIN
           _buildPlayerCard(
             playerSide: Player.red,
             profile: redPlayer,
@@ -40,7 +39,6 @@ class PlayerDashboard extends StatelessWidget {
             goalText: "Link Top & Bottom",
           ),
 
-          // TURN INDICATOR
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             decoration: BoxDecoration(
@@ -63,7 +61,6 @@ class PlayerDashboard extends StatelessWidget {
             ),
           ),
 
-          // BLUE PLAYER LOGIN
           _buildPlayerCard(
             playerSide: Player.blue,
             profile: bluePlayer,

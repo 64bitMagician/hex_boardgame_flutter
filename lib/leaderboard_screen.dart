@@ -21,10 +21,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   }
 
   void _loadAndSortPlayers() {
-    // 1. Get the list from the BST (O(N) Traversal)
     _rankedPlayers = widget.playerDB.getAllPlayersAlphabetically();
 
-    // 2. Sort the list descending by Wins, then by fewest Losses if there's a tie
     _rankedPlayers.sort((a, b) {
       int winComparison = b.wins.compareTo(a.wins);
       if (winComparison != 0) {
@@ -39,24 +37,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: const Text("Hall of Fame"),
+        title: const Text("Leaderboard"),
         backgroundColor: Colors.grey.shade900,
         foregroundColor: Colors.white,
-        actions: [
-          // This button will eventually navigate to your Visual Tree screen!
-          IconButton(
-            icon: const Icon(Icons.account_tree),
-            tooltip: "View BST Structure",
-            onPressed: () {
-              // TODO: Navigate to the Visual BST Painter Screen
-            },
-          )
-        ],
       ),
       body: _rankedPlayers.isEmpty
           ? const Center(
         child: Text(
-          "No players yet! Go play some matches.",
+          "No players yet!",
           style: TextStyle(fontSize: 18, color: Colors.grey),
         ),
       )
@@ -66,7 +54,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         itemBuilder: (context, index) {
           final player = _rankedPlayers[index];
 
-          // Style the top 3 players specially
           Color rankColor;
           if (index == 0) rankColor = Colors.amber; // Gold
           else if (index == 1) rankColor = Colors.grey.shade400; // Silver
@@ -95,7 +82,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   Text("${player.losses} Losses", style: const TextStyle(color: Colors.red, fontSize: 12)),
                 ],
               ),
-              // NEW: Navigate to the profile screen on tap!
               onTap: () {
                 Navigator.push(
                   context,
@@ -114,6 +100,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   String _calculateRatio(int wins, int losses) {
     if (wins == 0 && losses == 0) return "0.0";
     double ratio = (wins / (wins + losses)) * 100;
-    return ratio.toStringAsFixed(1); // Keep one decimal place
+    return ratio.toStringAsFixed(1); // we keep one decimal place
   }
 }

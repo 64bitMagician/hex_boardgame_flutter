@@ -24,7 +24,6 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // The Scaffold needs to know the height of the AppBar to calculate layout
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

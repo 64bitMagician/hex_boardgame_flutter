@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class GameBottomBar extends StatelessWidget {
   final VoidCallback onLeaderboardTap;
-  final VoidCallback onViewTreeTap; // NEW: Callback for the Tree screen
+  final VoidCallback onViewTreeTap;
 
   const GameBottomBar({
     Key? key,
     required this.onLeaderboardTap,
-    required this.onViewTreeTap,    // NEW
+    required this.onViewTreeTap,
   }) : super(key: key);
 
   @override
@@ -28,7 +28,6 @@ class GameBottomBar extends StatelessWidget {
               onPressed: onLeaderboardTap,
             ),
 
-            // NEW: The Button to view the Data Structure
             ElevatedButton.icon(
               icon: const Icon(Icons.account_tree),
               label: const Text("Visual BST"),
