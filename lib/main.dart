@@ -11,6 +11,8 @@ import 'game_bottom_bar.dart';
 import 'login_dialog.dart';
 import 'visual_tree_screen.dart';
 
+// [Documentation State: ___]
+
 void main() {
   runApp(
     const MaterialApp(debugShowCheckedModeBanner: false, home: HexGameScreen()),

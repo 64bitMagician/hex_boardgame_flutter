@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'user_profile_screen.dart';
 import 'player_bst.dart';
 
+// [Documentation State: ___]
+
 class LeaderboardScreen extends StatefulWidget {
   final PlayerBST playerDB;
 

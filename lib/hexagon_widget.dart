@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+// [Documentation State: ___]
+
 class HexagonWidget extends StatelessWidget {
   final double size;
   final Color color;

@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'hex_engine.dart';
 import 'hexagon_widget.dart';
 
+// [Documentation State: ___]
+
 class GameBoardView extends StatelessWidget {
   final HexEngine engine;
   final double hexRadius;

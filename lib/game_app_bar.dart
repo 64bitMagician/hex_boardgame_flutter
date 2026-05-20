@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// [Documentation State: FINISHED]
+
 /// The App Bar of our application. It requires a [VoidCallback] method at it's construction.
 /// The passed method will trigger everytime you press the Restart Game Icon at the far right
 /// of the App Bar. So what you need to pass is a [VoidCallback] method that implements the

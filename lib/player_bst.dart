@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// [Documentation State: ___]
+
 class PlayerProfile {
   String name;
   int wins;

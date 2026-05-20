@@ -1,5 +1,7 @@
 import 'disjoint_set.dart';
 
+// [Documentation State: ___]
+
 enum Player { none, red, blue }
 
 class HexEngine {

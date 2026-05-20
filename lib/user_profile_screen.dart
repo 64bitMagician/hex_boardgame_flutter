@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'player_bst.dart';
 
+// [Documentation State: ___]
+
 class UserProfileScreen extends StatelessWidget {
   final PlayerProfile profile;
 

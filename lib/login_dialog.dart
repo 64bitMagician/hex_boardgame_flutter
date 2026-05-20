@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'hex_engine.dart';
 import 'player_bst.dart';
 
+// [Documentation State: ___]
+
 class LoginDialog extends StatefulWidget {
   final Player side;
   final PlayerBST playerDB;

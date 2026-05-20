@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'player_bst.dart';
 import 'user_profile_screen.dart';
 
+// [Documentation State: ___]
+
 class NodeHitbox {
   final PlayerProfile profile;
   final Rect rect;
