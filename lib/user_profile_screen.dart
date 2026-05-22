@@ -5,8 +5,9 @@ import 'player_bst.dart';
 
 class UserProfileScreen extends StatelessWidget {
   final PlayerProfile profile;
+  final VoidCallback onDelete;
 
-  const UserProfileScreen({Key? key, required this.profile}) : super(key: key);
+  const UserProfileScreen({Key? key, required this.profile, required this.onDelete,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +70,15 @@ class UserProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text("$totalGames Total Matches Played", style: const TextStyle(color: Colors.grey)),
+              const SizedBox(height: 30),
+              TextButton.icon(
+                onPressed: () {
+                  onDelete(); // Trigger the deletion
+                  Navigator.pop(context); // Close the profile screen
+                },
+                icon: const Icon(Icons.delete, color: Colors.red),
+                label: const Text("Delete Profile", style: TextStyle(color: Colors.red)),
+              ),
             ],
           ),
         ),

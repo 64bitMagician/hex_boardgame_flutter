@@ -220,4 +220,55 @@ class PlayerBST {
     // each time we pass to the left child the middle node from the sublist on the left of the current node
     //               and to the right child, the middle node from the sublist on the right of the current node
   }
+
+  /// Public method to remove a player by name
+  void remove(String name) {
+    root = _removeRec(root, name.toLowerCase());
+  }
+
+  // This method removes a node from the BST Player tree.
+  // It removes the node that matches the targetName
+  // It starts removing from the passed node (root of tree or not)
+  BSTNode? _removeRec(BSTNode? node, String targetName) {
+    // if no tree return nothing
+    if (node == null) return null;
+
+    // compare given name to current node's name
+    int cmp = targetName.compareTo(node.profile.name.toLowerCase());
+
+    // if smaller alphabetically > go left
+    if (cmp < 0) {
+      node.left = _removeRec(node.left, targetName);
+    } else if (cmp > 0) { // if bigger alphabetically > go right
+      node.right = _removeRec(node.right, targetName);
+    } else {
+      // Node found!
+
+      // Case 1 and 2: No child or only one child
+      if (node.left == null) return node.right; // if right is also null, it means current node is leaf anyway, so we can return null directly instead of current node
+                                                // if right is not null, it is safe to return right node because it is the only child node and we can directly connect it to the parent of current node we want to delete
+      if (node.right == null) return node.left; // if there is something on the left, but not on the right, there is only one child, and we can directly return the left child
+
+      // Case 3: Two children
+      // Find the in-order successor | find the smallest node after current node
+      // assign the profile of that node to our current node
+      node.profile = _findMin(node.right!).profile;
+
+      // Now we need to delete the node we found in _findMin
+      // so we start looking from right subtree, the node with the name with the same name as our current node
+      node.right = _removeRec(node.right, node.profile.name.toLowerCase());
+    }
+    return node;
+  }
+
+  // Helper to find the smallest node in a subtree
+  BSTNode _findMin(BSTNode node) {
+    BSTNode current = node;
+    // You simply go as left as possible til before hitting null
+    while (current.left != null) {
+      current = current.left!;
+    }
+    // return the current node which is the minimum
+    return current;
+  }
 }

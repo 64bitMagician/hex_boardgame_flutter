@@ -92,7 +92,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserProfileScreen(profile: player), // when clicking on a player, navigate to his profile screen
+                    builder: (context) => UserProfileScreen(profile: player, onDelete: () {
+                      // This code waits until the button is pressed in the profile screen
+                      widget.playerDB.remove(player.name);
+                      widget.playerDB.saveTreeToStorage();
+                      setState(() {}); // This refreshes your tree view
+                    },), // when clicking on a player, navigate to his profile screen
                   ),
                 );
               },
