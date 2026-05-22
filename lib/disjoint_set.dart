@@ -12,7 +12,8 @@ class DisjointSet {
   //                      n is 42
   final List<int> parent;
   // the rank is refering only to root nodes. For other notes than root, the rank is not valid
-  // the rank means how many times an other component has been appended to the component which corresponds to the root in question
+  // so each component has a root. The rank of the root means the level of 'weight' that component has...
+  // in short, if the rank is higher for the root/component, then it has more nodes within it's component
   final List<int> rank;
 
   /// Constructor. Also initializes the:
@@ -56,4 +57,7 @@ class DisjointSet {
       }
     }
   }
+
+  //Side Note: If two merging components have the same rank, the root node of the resulted component will always be the mark
+  // that initiates the connection/union
 }
