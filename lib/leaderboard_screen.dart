@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'user_profile_screen.dart';
 import 'player_bst.dart';
 
-// [Documentation State: ___]
+// [Documentation State: FINISHED]
 
 class LeaderboardScreen extends StatefulWidget {
   final PlayerBST playerDB;
@@ -23,13 +23,17 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   }
 
   void _loadAndSortPlayers() {
+    // get all players
     _rankedPlayers = widget.playerDB.getAllPlayersAlphabetically();
 
+    // sort them by win count
     _rankedPlayers.sort((a, b) {
       int winComparison = b.wins.compareTo(a.wins);
+      // if not equal in wins
       if (winComparison != 0) {
         return winComparison;
       }
+      // if equal in wins, the one with less losses is in front
       return a.losses.compareTo(b.losses);
     });
   }
@@ -63,7 +67,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           else rankColor = Colors.blueGrey.shade100;
 
           return Card(
-            elevation: index < 3 ? 4 : 1,
+            elevation: index < 3 ? 4 : 1, // spotlight effect for first 3 players
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: ListTile(
               leading: CircleAvatar(
@@ -88,7 +92,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserProfileScreen(profile: player),
+                    builder: (context) => UserProfileScreen(profile: player), // when clicking on a player, navigate to his profile screen
                   ),
                 );
               },
@@ -99,9 +103,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     );
   }
 
+  // method to calculate win/matches played ratio of a player
   String _calculateRatio(int wins, int losses) {
     if (wins == 0 && losses == 0) return "0.0";
-    double ratio = (wins / (wins + losses)) * 100;
+    double ratio = (wins / (wins + losses)) * 100; // wins over matches played
     return ratio.toStringAsFixed(1); // we keep one decimal place
   }
 }

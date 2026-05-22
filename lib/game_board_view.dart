@@ -17,6 +17,7 @@ class GameBoardView extends StatelessWidget {
     required this.onBoardTap,
   }) : super(key: key);
 
+  // get the cell color with which to paint the hexes
   Color _getCellColor(Player player) {
     switch (player) {
       case Player.red: return Colors.red.withOpacity(0.8);
@@ -28,8 +29,12 @@ class GameBoardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double h = hexRadius;
-    final double w = math.sqrt(3) * h;
-    final double boardWidth = (engine.boardSize * w) + ((engine.boardSize - 1) * w / 2) + w;
+    final double w = math.sqrt(3) * h; // width of hexagon | from left flat edge to right flag edge
+    // boardWidth: it is the distance between the left-most edge of the first column and the right-most edge of the last column.
+    final double boardWidth = (engine.boardSize * w) + // this is the length of one row individual row.
+        ((engine.boardSize - 1) * w / 2) + // this is how many rows are left * half the width of hexagon | this is because they go additionaly, for each row, half the width of a hexagon
+        w; //
+
     final double boardHeight = ((engine.boardSize - 1) * 1.5 * h) + (2 * h);
 
     return Padding(
