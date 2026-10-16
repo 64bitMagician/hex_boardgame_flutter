@@ -182,14 +182,22 @@ class PlayerBST {
 
     // get back the list of PlayerProfiles from the jsonString
     if (jsonString != null && jsonString.isNotEmpty) {
-      // get each PlayerProfile Map Data
-      List<dynamic> decodedList = jsonDecode(jsonString);
+      // The stored data may be corrupted (invalid JSON, wrong types, missing fields).
+      // jsonDecode throws a FormatException, and fromJson throws a TypeError, so we
+      // catch everything and fall back to an empty database instead of crashing the app.
+      // The corrupted value is overwritten the next time the tree is saved.
+      try {
+        // get each PlayerProfile Map Data
+        List<dynamic> decodedList = jsonDecode(jsonString);
 
-      // create list of PlayerProfile instances from the decodedList
-      List<PlayerProfile> sortedPlayers = decodedList.map((json) => PlayerProfile.fromJson(json)).toList();
+        // create list of PlayerProfile instances from the decodedList
+        List<PlayerProfile> sortedPlayers = decodedList.map((json) => PlayerProfile.fromJson(json)).toList();
 
-      // build the BST from the list of PlayerProfiles
-      root = _buildBalancedTree(sortedPlayers, 0, sortedPlayers.length - 1);
+        // build the BST from the list of PlayerProfiles
+        root = _buildBalancedTree(sortedPlayers, 0, sortedPlayers.length - 1);
+      } catch (e) {
+        root = null; // empty database
+      }
     }
   }
 
