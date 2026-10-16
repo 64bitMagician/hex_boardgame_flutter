@@ -1,11 +1,11 @@
 {
-    "name": "hex_boardgame_flutter",
-    "short_name": "hex_boardgame_flutter",
+    "name": "Hex Board Game",
+    "short_name": "Hex",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Play Hex, the classic connection board game, built with Flutter.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,5 +1,9 @@
 # Hex — Flutter Board Game
 
+[![Test and deploy](https://github.com/64bitMagician/hex_boardgame_flutter/actions/workflows/deploy.yml/badge.svg)](https://github.com/64bitMagician/hex_boardgame_flutter/actions/workflows/deploy.yml)
+
+**[▶ Play it in your browser](https://64bitMagician.github.io/hex_boardgame_flutter/)**
+
 A cross-platform implementation of the classic connection board game **[Hex](https://en.wikipedia.org/wiki/Hex_(board_game))**, built with Flutter and Dart. Two players take turns claiming cells on an 11×11 rhombus of hexagons, each trying to build an unbroken chain between their two sides of the board.
 
 The game is the front end. Underneath it are two classic data structures written from scratch:
