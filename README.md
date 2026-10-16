@@ -37,32 +37,25 @@ The game is the front end. Underneath it are two classic data structures written
 
 ## Demo
 
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <img src="hex_boardgame_flutter_README_Assets/GIF/Playing.gif" alt="Two players placing stones on the board" /><br />
-      <b>Gameplay</b><br />
-      <sub>Players alternate claiming hexes until one side connects its edges.</sub>
-    </td>
-    <td align="center" width="50%">
-      <img src="hex_boardgame_flutter_README_Assets/GIF/PlayerSelection.gif" alt="Searching for and selecting player profiles" /><br />
-      <b>Player selection</b><br />
-      <sub>Search-as-you-type login, backed by BST prefix search.</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <img src="hex_boardgame_flutter_README_Assets/GIF/LeaderboardAndProfileAccess.gif" alt="Browsing the leaderboard and opening a player profile" /><br />
-      <b>Leaderboard and profiles</b><br />
-      <sub>Players ranked by wins; tap anyone to see their stats.</sub>
-    </td>
-    <td align="center" width="50%">
-      <img src="hex_boardgame_flutter_README_Assets/GIF/BST-Structure.gif" alt="Panning and zooming the visual binary search tree" /><br />
-      <b>Visual BST</b><br />
-      <sub>The player database drawn as a live, zoomable tree.</sub>
-    </td>
-  </tr>
-</table>
+### Gameplay
+Players alternate claiming hexes until one side connects its edges.
+
+<img src="hex_boardgame_flutter_README_Assets/GIF/Playing.gif" width="100%" alt="Two players placing stones on the board" />
+
+### Player selection
+Search-as-you-type login, backed by BST prefix search.
+
+<img src="hex_boardgame_flutter_README_Assets/GIF/PlayerSelection.gif" width="100%" alt="Searching for and selecting player profiles" />
+
+### Leaderboard and profiles
+Players ranked by wins; tap anyone to see their stats.
+
+<img src="hex_boardgame_flutter_README_Assets/GIF/LeaderboardAndProfileAccess.gif" width="100%" alt="Browsing the leaderboard and opening a player profile" />
+
+### Visual BST
+The player database drawn as a live, zoomable tree.
+
+<img src="hex_boardgame_flutter_README_Assets/GIF/BST-Structure.gif" width="100%" alt="Panning and zooming the visual binary search tree" />
 
 ---
 
