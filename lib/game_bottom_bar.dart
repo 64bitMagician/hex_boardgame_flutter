@@ -11,10 +11,10 @@ class GameBottomBar extends StatelessWidget {
 
   // The callbacks need to be passed at construction of widget
   const GameBottomBar({
-    Key? key,
+    super.key,
     required this.onLeaderboardTap,
     required this.onViewTreeTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

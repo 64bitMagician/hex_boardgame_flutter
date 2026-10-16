@@ -11,11 +11,11 @@ class HexagonWidget extends StatelessWidget {
   final Widget? child; //
 
   const HexagonWidget({
-    Key? key,
+    super.key,
     required this.size,
     required this.color,
     this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

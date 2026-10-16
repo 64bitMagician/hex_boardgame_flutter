@@ -20,7 +20,7 @@ void main() {
 }
 
 class HexGameScreen extends StatefulWidget {
-  const HexGameScreen({Key? key}) : super(key: key);
+  const HexGameScreen({super.key});
 
   @override
   State<HexGameScreen> createState() => _HexGameScreenState();

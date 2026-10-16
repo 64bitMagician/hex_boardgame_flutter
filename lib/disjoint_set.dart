@@ -41,19 +41,19 @@ class DisjointSet {
 
   /// Unite the sets containing 'i' and 'j', using Union by Rank
   void union(int i, int j) {
-    int root_i = find(i); // find the root from where 'i' lives, also apply Path Compression
-    int root_j = find(j); // find the root from where 'j' lives, also apply Path Compression
+    int rootI = find(i); // find the root from where 'i' lives, also apply Path Compression
+    int rootJ = find(j); // find the root from where 'j' lives, also apply Path Compression
 
     // If the two elements are within different sets (different Graphs):
     // We connect the two sets/graphs, and decrement the counter of connected components
-    if (root_i != root_j) {
-      if (rank[root_i] < rank[root_j]) { // if rank greater in root of graph 'j'
-        parent[root_i] = root_j; // the root of graph of 'j' becomes direct parent for root of graph of 'i'
-      } else if (rank[root_i] > rank[root_j]) { // if rank greater in root of graph 'i'
-        parent[root_j] = root_i; // the root of graph of 'i' becomes direct parent for root of graph of 'j'
+    if (rootI != rootJ) {
+      if (rank[rootI] < rank[rootJ]) { // if rank greater in root of graph 'j'
+        parent[rootI] = rootJ; // the root of graph of 'j' becomes direct parent for root of graph of 'i'
+      } else if (rank[rootI] > rank[rootJ]) { // if rank greater in root of graph 'i'
+        parent[rootJ] = rootI; // the root of graph of 'i' becomes direct parent for root of graph of 'j'
       } else { // if ranks are equal
-        parent[root_j] = root_i; // the root of graph of 'i' becomes direct parent for root of graph of 'j'
-        rank[root_i]++; // increase rank if trees were the same height
+        parent[rootJ] = rootI; // the root of graph of 'i' becomes direct parent for root of graph of 'j'
+        rank[rootI]++; // increase rank if trees were the same height
       }
     }
   }

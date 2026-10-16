@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:hex_boardgame_flutter/hex_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // [Documentation State: FINISHED]
@@ -23,7 +22,7 @@ class PlayerProfile {
 
   /// Factory Constructor. Used for creating [PlayerProfile] objects from data
   /// retrieved from JSONs. You just need to call this factory constructor [PlayerProfile.fromJson]
-  /// and feed it the Map<String, dynamic>
+  /// and feed it the `Map<String, dynamic>`
   /// From there it will simply return you the PlayerProfile based on the provided [Map]
   factory PlayerProfile.fromJson(Map<String, dynamic> json) {
     return PlayerProfile(

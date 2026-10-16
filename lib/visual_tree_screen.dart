@@ -13,7 +13,7 @@ class NodeHitbox {
 class VisualTreeScreen extends StatefulWidget {
   final PlayerBST playerDB;
 
-  const VisualTreeScreen({Key? key, required this.playerDB}) : super(key: key);
+  const VisualTreeScreen({super.key, required this.playerDB});
 
   @override
   State<VisualTreeScreen> createState() => _VisualTreeScreenState();
@@ -24,7 +24,7 @@ class _VisualTreeScreenState extends State<VisualTreeScreen> {
   // it represents the areas on the InteractiveViewer where user tap interactions
   // should trigger a specific behaviour
   // such as in our case, navigating to that Player node's profile
-  List<NodeHitbox> _hitboxes = [];
+  final List<NodeHitbox> _hitboxes = [];
 
   // This method handles the screen tap verification
   // if the tap has occured in one of the hitboxes in _hitboxes

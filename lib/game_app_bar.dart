@@ -10,9 +10,9 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onRestart;
 
   const GameAppBar({
-    Key? key,
+    super.key,
     required this.onRestart
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

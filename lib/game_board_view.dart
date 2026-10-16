@@ -11,17 +11,17 @@ class GameBoardView extends StatelessWidget {
   final Function(TapDownDetails) onBoardTap;
 
   const GameBoardView({
-    Key? key,
+    super.key,
     required this.engine,
     required this.hexRadius,
     required this.onBoardTap,
-  }) : super(key: key);
+  });
 
   // get the cell color with which to paint the hexes
   Color _getCellColor(Player player) {
     switch (player) {
-      case Player.red: return Colors.red.withOpacity(0.8);
-      case Player.blue: return Colors.blue.withOpacity(0.8);
+      case Player.red: return Colors.red.withValues(alpha: 0.8);
+      case Player.blue: return Colors.blue.withValues(alpha: 0.8);
       case Player.none: return Colors.white;
     }
   }

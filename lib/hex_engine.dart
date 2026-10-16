@@ -72,15 +72,19 @@ class HexEngine {
 
     // if the Red Player
     if (player == Player.red) {
-      if (row == 0) // if the selected hex is at row 0 (top edge)
+      if (row == 0) { // if the selected hex is at row 0 (top edge)
         targetSet.union(currentIndex, virtualTopRED); // perform union of current Hex and the virtualTopRED Hex | union with mother component
-      if (row == boardSize - 1) // if the selected hex is at last row (bottom edge)
+      }
+      if (row == boardSize - 1) { // if the selected hex is at last row (bottom edge)
         targetSet.union(currentIndex, virtualBottomRED); // perform union of current Hex and the virtualBottomRED Hex | union with mother component
+      }
     } else if (player == Player.blue) { // if the Blue Player
-      if (col == 0)  // if the selected hex is at column 0 (leftmost edge)
+      if (col == 0) { // if the selected hex is at column 0 (leftmost edge)
         targetSet.union(currentIndex, virtualLeftBLUE); // perform union of current Hex and the virtualLeftBLUE Hex | union with mother component
-      if (col == boardSize - 1) // if the selected hex is at last column (rightmost edge)
+      }
+      if (col == boardSize - 1) { // if the selected hex is at last column (rightmost edge)
         targetSet.union(currentIndex, virtualRightBLUE); // perform union of current Hex and the virtualRightBLUE Hex | union with mother component
+      }
     }
 
     // Get the coordinates of the neighbors from the surrounding hexes
@@ -92,12 +96,12 @@ class HexEngine {
 
     // now we iterate each neighbor of our selected hex
     for (var neighbor in neighbors) {
-      int neighbor_row_coordinate = neighbor[0];
-      int neighbor_column_coordinate = neighbor[1];
+      int neighborRowCoordinate = neighbor[0];
+      int neighborColumnCoordinate = neighbor[1];
 
-      if (neighbor_row_coordinate >= 0 && neighbor_row_coordinate < boardSize && // if within the row limits of physical board
-          neighbor_column_coordinate >= 0 && neighbor_column_coordinate < boardSize) { // if within column limits of physical board
-        int neighborHexIndex = _getHexIndex(neighbor_row_coordinate, neighbor_column_coordinate); // get the hex index of the neighbor
+      if (neighborRowCoordinate >= 0 && neighborRowCoordinate < boardSize && // if within the row limits of physical board
+          neighborColumnCoordinate >= 0 && neighborColumnCoordinate < boardSize) { // if within column limits of physical board
+        int neighborHexIndex = _getHexIndex(neighborRowCoordinate, neighborColumnCoordinate); // get the hex index of the neighbor
         if (board[neighborHexIndex] == player) { // if the neighbor hex already belongs to our player
           // perform union between neighbor and current hex
           // unite components into one

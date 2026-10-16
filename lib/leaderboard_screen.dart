@@ -7,7 +7,7 @@ import 'player_bst.dart';
 class LeaderboardScreen extends StatefulWidget {
   final PlayerBST playerDB;
 
-  const LeaderboardScreen({Key? key, required this.playerDB}) : super(key: key);
+  const LeaderboardScreen({super.key, required this.playerDB});
 
   @override
   State<LeaderboardScreen> createState() => _LeaderboardScreenState();
@@ -61,10 +61,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           final player = _rankedPlayers[index];
 
           Color rankColor;
-          if (index == 0) rankColor = Colors.amber; // Gold
-          else if (index == 1) rankColor = Colors.grey.shade400; // Silver
-          else if (index == 2) rankColor = Colors.brown.shade300; // Bronze
-          else rankColor = Colors.blueGrey.shade100;
+          if (index == 0) {
+            rankColor = Colors.amber; // Gold
+          } else if (index == 1) {
+            rankColor = Colors.grey.shade400; // Silver
+          } else if (index == 2) {
+            rankColor = Colors.brown.shade300; // Bronze
+          } else {
+            rankColor = Colors.blueGrey.shade100;
+          }
 
           return Card(
             elevation: index < 3 ? 4 : 1, // spotlight effect for first 3 players

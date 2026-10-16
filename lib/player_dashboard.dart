@@ -12,13 +12,13 @@ class PlayerDashboard extends StatelessWidget {
   final Function(Player) onLoginTap;
 
   const PlayerDashboard({
-    Key? key,
+    super.key,
     required this.currentPlayer,
     required this.gameOver,
     required this.redPlayer,
     required this.bluePlayer,
     required this.onLoginTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class PlayerDashboard extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))
+            BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 5))
           ]
       ),
       child: Row(

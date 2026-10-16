@@ -10,11 +10,11 @@ class LoginDialog extends StatefulWidget {
   final Function(PlayerProfile) onProfileSelected;
 
   const LoginDialog({
-    Key? key,
+    super.key,
     required this.side,
     required this.playerDB,
     required this.onProfileSelected,
-  }) : super(key: key);
+  });
 
   @override
   State<LoginDialog> createState() => _LoginDialogState();
