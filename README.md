@@ -7,12 +7,11 @@ The game is the front end. Underneath it are two classic data structures written
 - a **Disjoint Set (Union-Find)** that detects a win in near-constant time on every move, and
 - a **self-balancing-on-load Binary Search Tree** that stores player profiles, drives search-as-you-type login, and is **drawn live on screen** as an interactive tree.
 
-<!-- Add screenshots here, e.g.:
 <p align="center">
-  <img src="docs/screenshots/board.png" width="45%" />
-  <img src="docs/screenshots/bst.png" width="45%" />
+  <img src="hex_boardgame_flutter_README_Assets/Images/GameWinCondition.png" width="480" alt="Finished game: Blue wins by linking the left and right edges" />
+  <br />
+  <em>A finished match: Blue has linked the left and right edges.</em>
 </p>
--->
 
 ---
 
@@ -29,6 +28,37 @@ The game is the front end. Underneath it are two classic data structures written
 | **Persistence** | Profiles are serialized to JSON and saved with `shared_preferences` (browser `localStorage` on web), so they survive restarts. |
 | **Game-state guards** | Profiles can't be switched mid-game, the same player can't be both Red and Blue, and moves are blocked until both sides are logged in. |
 | **Cross-platform** | Single codebase for Web, Windows, macOS, Linux, Android and iOS. |
+
+---
+
+## Demo
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="hex_boardgame_flutter_README_Assets/GIF/Playing.gif" alt="Two players placing stones on the board" /><br />
+      <b>Gameplay</b><br />
+      <sub>Players alternate claiming hexes until one side connects its edges.</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="hex_boardgame_flutter_README_Assets/GIF/PlayerSelection.gif" alt="Searching for and selecting player profiles" /><br />
+      <b>Player selection</b><br />
+      <sub>Search-as-you-type login, backed by BST prefix search.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="hex_boardgame_flutter_README_Assets/GIF/LeaderboardAndProfileAccess.gif" alt="Browsing the leaderboard and opening a player profile" /><br />
+      <b>Leaderboard and profiles</b><br />
+      <sub>Players ranked by wins; tap anyone to see their stats.</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="hex_boardgame_flutter_README_Assets/GIF/BST-Structure.gif" alt="Panning and zooming the visual binary search tree" /><br />
+      <b>Visual BST</b><br />
+      <sub>The player database drawn as a live, zoomable tree.</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
